@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 
@@ -17,7 +18,7 @@ export class ProductComponent implements OnInit {
 
   //ProductComponent ProductService'yi kullanabilir.
   //ActivatedRoute : built-in bir angular service'dir. url'de gelen category/1 gibi değerleri okuyacağız.
-  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute, private toasterService:ToastrService) {}
+  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute, private toasterService:ToastrService, private cartService:CartService) {}
   ngOnInit(): void {
     // İlk yüklenme zamanında yapılması gereken işlemleri burada tanımlayabilirsiniz.
     // this.getProducts();
@@ -43,5 +44,6 @@ export class ProductComponent implements OnInit {
    }
    addToCard(product:Product){
     this.toasterService.success("Sepete Eklendi",product.productName)
+    this.cartService.addToCart(product)
    }
 }
