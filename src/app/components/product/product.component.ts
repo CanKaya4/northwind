@@ -11,12 +11,20 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductComponent implements OnInit {
   products: Product[] = [];
   dataLoaded = false;
+
   //ProductComponent ProductService'yi kullanabilir.
+  //ActivatedRoute : built-in bir angular service'dir. url'de gelen category/1 gibi değerleri okuyacağız.
   constructor(private productService:ProductService, private activatedRoute:ActivatedRoute) {}
   ngOnInit(): void {
     // İlk yüklenme zamanında yapılması gereken işlemleri burada tanımlayabilirsiniz.
-    this.getProducts();
-
+    // this.getProducts();
+    this.activatedRoute.params.subscribe(params=>{
+      if(params["categoryId"]) {
+        this.getProductsByCategory(params["categoryId"])
+      }else{
+        this.getProducts()
+      }
+    })
   }
   getProducts() {
    this.productService.getProducts().subscribe(response=>{
@@ -25,9 +33,10 @@ export class ProductComponent implements OnInit {
    });
   }
   getProductsByCategory(categoryId:number) {
-    this.productService.getProducts().subscribe(response=>{
+    this.productService.getProductsByCategory(categoryId).subscribe(response=>{
      this.products = response.data;
      this.dataLoaded = true;
     });
    }
+  
 }
