@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -11,6 +12,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductComponent implements OnInit {
   products: Product[] = [];
   dataLoaded = false;
+  filterText="";
 
   //ProductComponent ProductService'yi kullanabilir.
   //ActivatedRoute : built-in bir angular service'dir. url'de gelen category/1 gibi değerleri okuyacağız.
